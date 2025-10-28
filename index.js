@@ -65,7 +65,15 @@ dotenv.config();
 let app = express();
 
 // middlewares
-app.use(cors());
+
+app.use(cors({
+  origin: [
+    "https://your-frontend.vercel.app", // 👈 replace with your real frontend URL
+    "http://localhost:5173"             // 👈 keep this for local dev (Vite)
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 app.use(express.json());
 
 // root route
