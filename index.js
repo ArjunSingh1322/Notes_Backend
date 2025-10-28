@@ -54,10 +54,7 @@
     // })
 
 
-
-
-
-    import express from "express";
+import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import "./config/db.js";
@@ -67,13 +64,26 @@ dotenv.config();
 
 let app = express();
 
+// middlewares
 app.use(cors());
 app.use(express.json());
 
+// root route
 app.get("/", (req, res) => {
-  res.send("Backend is running successfully on Vercel!");
+  res.send("✅ Backend is running successfully on Vercel & Local!");
 });
 
+// main routes
 app.use("/notes", notesRoutes);
 
+// port setup
+let PORT = process.env.PORT || 5047;
+
+// listen only if running locally
+  app.listen(PORT, () => {
+    console.log(`✅ Server running locally on http://localhost:${PORT}`);
+  });
+
+
+// export for Vercel
 export default app;
