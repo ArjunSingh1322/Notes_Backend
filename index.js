@@ -88,9 +88,9 @@ app.use("/notes", notesRoutes);
 let PORT = process.env.PORT || 5047;
 
 // listen only if running locally
-  app.listen(PORT, () => {
-    console.log(`✅ Server running locally on http://localhost:${PORT}`);
-  });
+  // app.listen(PORT, () => {
+  //   console.log(`✅ Server running locally on http://localhost:${PORT}`);
+  // });
 
 
 // export for Vercel
