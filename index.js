@@ -53,7 +53,6 @@
     //     console.log(`Server is running on port ${PORT}`)
     // })
 
-
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -64,16 +63,15 @@ dotenv.config();
 
 let app = express();
 
-// middlewares
+// ✅ Allow all origins (no CORS restriction)
+app.use(
+  cors({
+    origin: "*", // allows requests from anywhere
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
-app.use(cors({
-  origin: [
-    "https://your-frontend.vercel.app", // 👈 replace with your real frontend URL
-    "http://localhost:5173"             // 👈 keep this for local dev (Vite)
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
 app.use(express.json());
 
 // root route
@@ -87,11 +85,12 @@ app.use("/notes", notesRoutes);
 // port setup
 let PORT = process.env.PORT || 5047;
 
-// listen only if running locally
-  // app.listen(PORT, () => {
-  //   console.log(`✅ Server running locally on http://localhost:${PORT}`);
-  // });
+// ✅ Run server only locally (not on Vercel)
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`✅ Server running locally on http://localhost:${PORT}`);
+  });
+}
 
-
-// export for Vercel
+// ✅ Export app for Vercel
 export default app;
